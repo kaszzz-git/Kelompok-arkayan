@@ -20,7 +20,7 @@ Yang penting jalan dulu, nanti disempurnakan sambil jalan 🚀
 ---
 
 ## 🧑‍🤝‍🧑 Anggota Tim
-- 🐿️ Muhammad Arfa
+- 🐿️ Arfa
 - 🐠 Narayan
 - 🐒 Azka
 - 👶 Faiz
