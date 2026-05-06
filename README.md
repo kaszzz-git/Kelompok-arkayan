@@ -40,9 +40,3 @@ Beberapa project yang pernah kami buat:
 - 🎮 Game sederhana (HTML/CSS/JS)
 - 🔐 Smart Home (RFID Door Lock)
 
----
-
-## 🚀 Cara Menjalankan Project
-1. Clone repository ini:
-   ```bash
-   git clone https://github.com/username/kelompok-arkayan.git
