@@ -132,6 +132,7 @@
       gap: 2.5rem;
       list-style: none;
       align-items: center;
+      position: relative;
     }
 
     .nav-links a {
@@ -161,7 +162,12 @@
       width: 100%;
     }
 
-    /* Dark mode toggle button */
+    /* Dark mode toggle button dengan hint arrow */
+    .theme-toggle-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
     .theme-toggle {
       background: rgba(211, 47, 47, 0.2);
       border: none;
@@ -182,8 +188,49 @@
       color: white;
       transform: scale(1.05);
     }
+    /* Hint kecil + panah */
+    .click-hint {
+      position: absolute;
+      top: -30px;
+      right: -10px;
+      background: #d32f2f;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 30px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      animation: bounceHint 1s ease-in-out infinite;
+      z-index: 110;
+      pointer-events: none;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+    }
+    .click-hint i {
+      margin-right: 4px;
+      font-size: 0.65rem;
+    }
+    @keyframes bounceHint {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+    /* small arrow pointer */
+    .click-hint::after {
+      content: "⬇️";
+      position: absolute;
+      bottom: -18px;
+      right: 12px;
+      font-size: 12px;
+      color: #d32f2f;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    /* hidden class untuk hint */
+    .click-hint.hidden {
+      display: none;
+    }
 
-    /* Hero Section - Business Team */
+    /* Hero Section */
     .hero {
       width: 100%;
       min-height: 85vh;
@@ -372,7 +419,7 @@
       border-radius: 8px;
     }
 
-    /* Skills / Services Grid */
+    /* Skills Grid */
     .skills-grid {
       display: flex;
       flex-wrap: wrap;
@@ -400,7 +447,7 @@
       border-color: #d32f2f;
     }
 
-    /* Team Members Grid - Updated */
+    /* Team Members Grid */
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -612,6 +659,16 @@
       .team-grid {
         grid-template-columns: 1fr;
       }
+      .click-hint {
+        top: -35px;
+        right: -5px;
+        font-size: 0.65rem;
+        padding: 3px 8px;
+      }
+      .click-hint::after {
+        bottom: -16px;
+        right: 8px;
+      }
     }
 
     .cursor-glow {
@@ -642,7 +699,12 @@
     <li><a href="#team">Team</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#projects">Projects</a></li>
-    <li><button class="theme-toggle" id="darkModeToggle" aria-label="Dark/Light mode"><i class="fas fa-moon"></i></button></li>
+    <li class="theme-toggle-wrapper">
+      <button class="theme-toggle" id="darkModeToggle" aria-label="Dark/Light mode"><i class="fas fa-moon"></i></button>
+      <div class="click-hint" id="clickHint">
+        <i class="fas fa-hand-pointer"></i> klik!
+      </div>
+    </li>
   </ul>
 </nav>
 
@@ -677,7 +739,7 @@
     </div>
   </section>
 
-  <!-- Team Section - Updated Members -->
+  <!-- Team Section -->
   <section id="team">
     <div class="reveal">
       <h2 class="section-title">Inti Tim Arkayaniz</h2>
@@ -690,7 +752,7 @@
     </div>
   </section>
 
-  <!-- Services / Keahlian -->
+  <!-- Services -->
   <section id="services">
     <div class="reveal">
       <h2 class="section-title">Layanan Bisnis</h2>
@@ -703,7 +765,6 @@
         <div class="skill-item"><i class="fas fa-headset"></i> 24/7 Support</div>
       </div>
       
-      <!-- Contact & Business Info Panels -->
       <div class="double-info-wrapper" style="margin-top: 2.5rem;" id="contact">
         <div class="info-panel">
           <div class="info-title"><i class="fas fa-envelope-open-text"></i> Hubungi Tim Bisnis</div>
@@ -773,11 +834,37 @@
 
 <script>
   (function() {
-    // Dark/Light Mode Toggle
+    // Dark/Light Mode Toggle + Hint disappearance logic
     const toggleBtn = document.getElementById('darkModeToggle');
     const body = document.body;
     const icon = toggleBtn.querySelector('i');
+    const clickHint = document.getElementById('clickHint');
     
+    // Cek local storage untuk tema & juga state hint (apakah sudah pernah diklik sebelumnya di session ini? kita pakai sessionStorage agar hilang setelah refresh)
+    // Tapi permintaan: "keluar laginya pas di refresh websitenya" -> artinya hint akan muncul lagi setelah refresh.
+    // Kita simpan status hint di sessionStorage per session? Tidak, karena refresh akan hilang sessionStorage juga? justru kalau sessionStorage akan hilang saat tab ditutup, tapi refresh masih ada.
+    // Agar hint muncul kembali setelah refresh, kita tidak boleh menyimpan permanen, cukup localStorage/sessionStorage untuk sementara? 
+    // Namun permintaan: "keluar laginya pas di refresh websitenya" artinya setelah refresh hintnya muncul lagi. Maka kita tidak boleh menyimpan state hint secara permanen.
+    // Cukup: hint hilang saat tombol diklik (disembunyikan secara visual). Saat refresh, hint akan muncul lagi karena DOM baru.
+    // Jadi kita hanya perlu menambahkan event click untuk menyembunyikan hint, dan tidak perlu menyimpan state ke storage.
+    if (clickHint) {
+      // fungsi untuk menyembunyikan hint dengan animasi kecil
+      const hideHint = () => {
+        if (clickHint && !clickHint.classList.contains('hidden')) {
+          clickHint.classList.add('hidden');
+        }
+      };
+      // ketika tombol toggle diklik, hint hilang
+      toggleBtn.addEventListener('click', () => {
+        hideHint();
+      });
+      // opsional: jika user mengklik area hint pun, tetap hilang
+      clickHint.addEventListener('click', () => {
+        hideHint();
+      });
+    }
+    
+    // Theme toggle logic
     if (localStorage.getItem('theme') === 'dark') {
       body.classList.add('dark');
       icon.classList.remove('fa-moon');
@@ -848,7 +935,7 @@
       });
     });
 
-    // Tilt effect for cards
+    // Tilt effect
     const tiltItems = document.querySelectorAll('.project-card, .info-panel, .card-float, .team-card');
     tiltItems.forEach(el => {
       el.addEventListener('mousemove', (e) => {
