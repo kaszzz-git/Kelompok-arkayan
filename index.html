@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Arkayaniz | Team Business Portfolio</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* VARIABLES THEME (Light default) */
+    :root {
+      --bg-gradient-start: #eef5ff;
+      --bg-gradient-mid: #ffffff;
+      --bg-gradient-end: #d9eaff;
+      --text-primary: #0a2540;
+      --text-secondary: #1f4e6e;
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(30, 136, 229, 0.2);
+      --card-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.05);
+      --navbar-bg: rgba(255, 255, 255, 0.75);
+      --skill-bg: rgba(255, 255, 255, 0.8);
+      --footer-bg: rgba(255, 255, 255, 0.5);
+      --badge-bg: rgba(30, 136, 229, 0.12);
+      --info-panel-bg: rgba(255, 255, 255, 0.75);
+      --tag-bg: #e2f0fd;
+      --scroll-track: #e2f0fd;
+      --team-card-bg: rgba(255, 255, 255, 0.7);
+    }
+
+    body.dark {
+      --bg-gradient-start: #0a1927;
+      --bg-gradient-mid: #0f2a34;
+      --bg-gradient-end: #07161f;
+      --text-primary: #e6f7ff;
+      --text-secondary: #b3dfef;
+      --card-bg: rgba(20, 40, 50, 0.8);
+      --card-border: rgba(30, 136, 229, 0.4);
+      --card-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.4);
+      --navbar-bg: rgba(10, 30, 40, 0.85);
+      --skill-bg: rgba(25, 55, 70, 0.8);
+      --footer-bg: rgba(10, 30, 40, 0.7);
+      --badge-bg: rgba(30, 136, 229, 0.25);
+      --info-panel-bg: rgba(15, 45, 58, 0.8);
+      --tag-bg: #1e4a6e;
+      --scroll-track: #1e3a4a;
+      --team-card-bg: rgba(20, 50, 65, 0.8);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 40%, var(--bg-gradient-end) 100%);
+      color: var(--text-primary);
+      scroll-behavior: smooth;
+      line-height: 1.5;
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.2s ease;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--scroll-track);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e88e5;
+      border-radius: 12px;
+    }
+
+    /* FULL STRETCH MODE */
+    .full-stretch {
+      width: 100%;
+    }
+
+    /* Navbar Stretch */
+    .navbar {
+      width: 100%;
+      padding: 0.9rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navbar-bg);
+      border-bottom: 1px solid rgba(30, 136, 229, 0.3);
+      transition: all 0.3s ease, background 0.3s;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(30, 136, 229, 0.15);
+      padding: 0.3rem 1.2rem 0.3rem 0.9rem;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(30,136,229,0.4);
+      transition: transform 0.2s ease;
+    }
+    .brand-logo:hover {
+      transform: scale(1.02);
+    }
+    .logo-icon {
+      font-size: 1.6rem;
+      color: #1e88e5;
+    }
+    .logo-text {
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #1e88e5, #6ab0f5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: #1e88e5;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background: #1e88e5;
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Dark mode toggle button */
+    .theme-toggle {
+      background: rgba(30, 136, 229, 0.2);
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      color: var(--text-primary);
+      backdrop-filter: blur(4px);
+    }
+    .theme-toggle:hover {
+      background: #1e88e5;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* Hero Section - Business Team */
+    .hero {
+      width: 100%;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      padding: 3rem 5%;
+      gap: 3rem;
+      position: relative;
+    }
+
+    .hero-content {
+      flex: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--badge-bg);
+      padding: 0.5rem 1.4rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1e88e5;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(2px);
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(to right, #1e88e5, #6ab0f5, #0a5c8e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .hero-tagline {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #2c7cb6;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    body.dark .hero-tagline {
+      color: #7fc1e0;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin-bottom: 2rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: #1e88e5;
+      color: white;
+      box-shadow: 0 8px 18px rgba(30, 136, 229, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #0c6bbf;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 24px rgba(30, 136, 229, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #1e88e5;
+      color: #1e88e5;
+    }
+
+    .btn-outline:hover {
+      background: #1e88e5;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* floating team card */
+    .hero-graphic {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card-float {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border-radius: 56px;
+      padding: 1.5rem;
+      box-shadow: 0 25px 40px -16px rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--card-border);
+      animation: float 4.5s ease-in-out infinite;
+      width: 280px;
+      text-align: center;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-14px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .team-avatar {
+      font-size: 4rem;
+      color: #1e88e5;
+      background: rgba(255,255,255,0.9);
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+    body.dark .team-avatar {
+      background: #1e3a4a;
+    }
+
+    .stat-badge {
+      display: inline-block;
+      background: white;
+      border-radius: 30px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.75rem;
+      margin: 0.2rem;
+      font-weight: 600;
+      color: #0f3b5f;
+    }
+    body.dark .stat-badge {
+      background: #0f2f3f;
+      color: #b3e4ff;
+    }
+
+    section {
+      width: 100%;
+      padding: 5rem 5%;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(120deg, #1e88e5, #6ab0f5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 70px;
+      height: 4px;
+      background: #1e88e5;
+      border-radius: 8px;
+    }
+
+    /* Skills / Services Grid */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+
+    .skill-item {
+      background: var(--skill-bg);
+      backdrop-filter: blur(4px);
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      color: var(--text-primary);
+      border: 1px solid rgba(30, 136, 229, 0.3);
+      transition: all 0.2s;
+      cursor: default;
+      font-size: 1rem;
+    }
+
+    .skill-item:hover {
+      transform: scale(1.05);
+      background: #1e88e5;
+      color: white;
+      border-color: #1e88e5;
+    }
+
+    /* Team Members Grid (New) */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .team-card {
+      background: var(--team-card-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 1.8rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(30, 136, 229, 0.3);
+    }
+    .team-card:hover {
+      transform: translateY(-8px);
+      border-color: #1e88e5;
+      box-shadow: 0 20px 30px -12px rgba(30,136,229,0.2);
+    }
+    .team-avatar-sm {
+      font-size: 3.5rem;
+      color: #1e88e5;
+      margin-bottom: 1rem;
+    }
+    .team-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+    }
+    .team-role {
+      font-size: 0.85rem;
+      color: #1e88e5;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+    .team-bio {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Info Panels (Contact & Business) */
+    .info-panel {
+      background: var(--info-panel-bg);
+      backdrop-filter: blur(16px);
+      border-radius: 38px;
+      padding: 1.8rem 2rem;
+      border: 1px solid rgba(30, 136, 229, 0.35);
+      transition: all 0.25s ease;
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
+    }
+
+    .info-panel:hover {
+      transform: translateY(-5px);
+      border-color: #1e88e5;
+    }
+
+    .info-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-primary);
+    }
+
+    .info-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .info-row i {
+      width: 28px;
+      font-size: 1.2rem;
+      color: #1e88e5;
+    }
+
+    .social-links-compact {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .social-icon-sm {
+      font-size: 1.6rem;
+      color: #1e88e5;
+      transition: all 0.2s;
+    }
+
+    .social-icon-sm:hover {
+      color: #0a4b8a;
+      transform: scale(1.2) translateY(-3px);
+    }
+
+    /* Projects Grid (Business portfolio) */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      border-radius: 32px;
+      padding: 1.8rem;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow);
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      background: var(--info-panel-bg);
+      border-color: #1e88e580;
+    }
+
+    .project-icon {
+      font-size: 2.6rem;
+      color: #1e88e5;
+      margin-bottom: 1rem;
+    }
+
+    .project-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      background: var(--tag-bg);
+      padding: 0.25rem 0.9rem;
+      border-radius: 20px;
+      display: inline-block;
+      margin-right: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .double-info-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .footer {
+      width: 100%;
+      text-align: center;
+      padding: 2.2rem 5%;
+      border-top: 1px solid rgba(30,136,229,0.3);
+      background: var(--footer-bg);
+      backdrop-filter: blur(8px);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.7s ease;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 850px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 3rem 5%;
+      }
+      .hero h1 {
+        font-size: 2.6rem;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 5%;
+      }
+      .nav-links {
+        gap: 1.5rem;
+      }
+      .section-title:after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .section-title {
+        text-align: center;
+        display: block;
+      }
+      .hero-desc {
+        max-width: 100%;
+      }
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,136,229,0.5), rgba(30,136,229,0.08));
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s;
+      mix-blend-mode: overlay;
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<nav class="navbar">
+  <div class="brand-logo">
+    <i class="fas fa-users logo-icon"></i>
+    <span class="logo-text">ARKAYANIZ TEAM</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><button class="theme-toggle" id="darkModeToggle" aria-label="Dark/Light mode"><i class="fas fa-moon"></i></button></li>
+  </ul>
+</nav>
+
+<main class="full-stretch">
+  <!-- Hero Section - Business Team Introduction -->
+  <section id="home" class="hero">
+    <div class="hero-content reveal">
+      <span class="hero-badge"><i class="fas fa-building"></i> Business Collective • Established 2024</span>
+      <h1>Arkayaniz<br>Creative Business Alliance</h1>
+      <div class="hero-tagline">
+        <i class="fas fa-chart-line" style="color:#ffb74d;"></i> 
+        <span>Bekerja Cerdas, Bertumbuh Bersama</span>
+      </div>
+      <p class="hero-desc">Kami adalah tim kolaboratif yang berfokus pada solusi digital inovatif untuk bisnis modern. Dari pengembangan web hingga strategi brand, Arkayaniz siap membawa ide Anda ke level berikutnya.</p>
+      <div class="btn-group">
+        <a href="#projects" class="btn btn-primary"><i class="fas fa-briefcase"></i> Portfolio Kami</a>
+        <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> Hubungi Tim</a>
+      </div>
+    </div>
+    <div class="hero-graphic reveal">
+      <div class="card-float">
+        <div class="team-avatar">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <div><i class="fas fa-check-circle" style="color:#1e88e5;"></i> <strong>4+ anggota aktif</strong></div>
+        <div style="margin-top: 12px;">
+          <span class="stat-badge">12+ project</span>
+          <span class="stat-badge">5 klien bisnis</span>
+        </div>
+        <div style="margin-top: 8px;">✨ Ready for collaboration</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team">
+    <div class="reveal">
+      <h2 class="section-title">Inti Tim Arkayaniz</h2>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-avatar-sm"><i class="fas fa-user-tie"></i></div><h3>Muhammad Arfa</h3><div class="team-role">Lead Developer & Strategist</div><div class="team-bio">Fullstack expert, mengarahkan visi teknis tim.</div></div>
+        <div class="team-card"><div class="team-avatar-sm"><i class="fas fa-palette"></i></div><h3>Narayan Faustina Kamil</h3><div class="team-role">Creative Director</div><div class="team-bio">Desain UI/UX dan branding yang memukau.</div></div>
+        <div class="team-card"><div class="team-avatar-sm"><i class="fas fa-chart-simple"></i></div><h3>Azka Bima Pradana</h3><div class="team-role">Business Analyst</div><div class="team-bio">Menerjemahkan kebutuhan bisnis ke dalam solusi digital.</div></div>
+        <div class="team-card"><div class="team-avatar-sm"><i class="fas fa-server"></i></div><h3>Muhammad Faiz Fadhillah</h3><div class="team-role">Cloud & Ops</div><div class="team-bio">Infrastruktur dan deployment yang scalable.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services / Keahlian -->
+  <section id="services">
+    <div class="reveal">
+      <h2 class="section-title">Layanan Bisnis</h2>
+      <div class="skills-grid">
+        <div class="skill-item"><i class="fas fa-code"></i> Custom Web Development</div>
+        <div class="skill-item"><i class="fas fa-mobile-alt"></i> Mobile-First Design</div>
+        <div class="skill-item"><i class="fas fa-chart-line"></i> Digital Consulting</div>
+        <div class="skill-item"><i class="fas fa-cloud-upload-alt"></i> Cloud Solutions</div>
+        <div class="skill-item"><i class="fas fa-search"></i> SEO & Performance</div>
+        <div class="skill-item"><i class="fas fa-headset"></i> 24/7 Support</div>
+      </div>
+      
+      <!-- Contact & Business Info Panels -->
+      <div class="double-info-wrapper" style="margin-top: 2.5rem;" id="contact">
+        <div class="info-panel">
+          <div class="info-title"><i class="fas fa-envelope-open-text"></i> Hubungi Tim Bisnis</div>
+          <div class="info-detail">
+            <div class="info-row"><i class="fas fa-envelope"></i> <strong>Email Bisnis:</strong> hello@arkayaniz.com</div>
+            <div class="info-row"><i class="fas fa-map-marker-alt"></i> <strong>Berdasarkan:</strong> Bekasi, Indonesia</div>
+            <div class="info-row"><i class="fas fa-clock"></i> <strong>Respon cepat</strong> — Monday to Friday, 9AM-6PM</div>
+            <div class="social-links-compact">
+              <a href="#" class="social-icon-sm"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-icon-sm"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="social-icon-sm"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="info-panel">
+          <div class="info-title"><i class="fas fa-handshake"></i> Kolaborasi & Partnership</div>
+          <div class="info-detail">
+            <div class="info-row"><i class="fas fa-rocket"></i> Tersedia untuk project bersama & joint venture</div>
+            <div class="info-row"><i class="fas fa-comments"></i> Konsultasi strategi digital gratis (sesi awal)</div>
+            <div class="info-row"><i class="fas fa-calendar-alt"></i> Meeting via Zoom / Google Meet</div>
+            <div class="info-row"><i class="fas fa-award"></i> Garansi kepuasan & revisi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Portfolio -->
+  <section id="projects">
+    <div class="reveal">
+      <h2 class="section-title">Proyek Unggulan</h2>
+      <div class="projects-grid">
+        <div class="project-card"><div class="project-icon"><i class="fas fa-store"></i></div><h3>Arkamart E-commerce</h3><p>Platform belanja modern dengan sistem rekomendasi AI & integrasi pembayaran.</p><span class="project-tag">Laravel</span><span class="project-tag">React</span></div>
+        <div class="project-card"><div class="project-icon"><i class="fas fa-chalkboard-user"></i></div><h3>EduNusa LMS</h3><p>Learning management system untuk sekolah dan pelatihan online.</p><span class="project-tag">Next.js</span><span class="project-tag">Node.js</span></div>
+        <div class="project-card"><div class="project-icon"><i class="fas fa-chart-line"></i></div><h3>BizAnalytics Pro</h3><p>Dashboard analitik untuk UMKM dengan visualisasi realtime.</p><span class="project-tag">Python</span><span class="project-tag">D3.js</span></div>
+        <div class="project-card"><div class="project-icon"><i class="fas fa-calendar-check"></i></div><h3>EventHub System</h3><p>Manajemen event & ticketing digital untuk konferensi.</p><span class="project-tag">MERN</span><span class="project-tag">Tailwind</span></div>
+      </div>
+      
+      <div class="double-info-wrapper" style="margin-top: 2.5rem;">
+        <div class="info-panel">
+          <div class="info-title"><i class="fas fa-globe"></i> 🌐 Terhubung Dengan Kami</div>
+          <div class="info-detail">
+            <div class="info-row"><i class="fab fa-whatsapp"></i> +62 857 1234 5678 (Business Only)</div>
+            <div class="info-row"><i class="fas fa-paper-plane"></i> Telegram: @arkayaniz_team</div>
+            <div class="info-row"><i class="fas fa-envelope-open-text"></i> partners@arkayaniz.com</div>
+            <div class="social-links-compact"><a href="#" class="social-icon-sm"><i class="fab fa-github"></i></a><a href="#" class="social-icon-sm"><i class="fab fa-linkedin-in"></i></a><a href="#" class="social-icon-sm"><i class="fab fa-discord"></i></a></div>
+            <div class="info-row"><i class="fas fa-bolt"></i> <strong>Fast Response</strong> — biasanya dalam 2 jam</div>
+          </div>
+        </div>
+        <div class="info-panel">
+          <div class="info-title"><i class="fas fa-chart-simple"></i> Statistik Tim</div>
+          <div class="info-detail">
+            <div class="info-row"><i class="fas fa-code-branch"></i> 30+ proyek selesai</div>
+            <div class="info-row"><i class="fas fa-users"></i> 12+ klien puas</div>
+            <div class="info-row"><i class="fas fa-microphone-alt"></i> Tersedia untuk workshop & webinar</div>
+            <div class="info-row"><i class="fas fa-certificate"></i> Sertifikasi mitra Google Cloud</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2026 Arkayaniz Team — Creative Business Alliance | hello@arkayaniz.com | <i class="fas fa-heart" style="color:#1e88e5;"></i> Kolaborasi untuk pertumbuhan</p>
+</footer>
+
+<script>
+  (function() {
+    // Dark/Light Mode Toggle
+    const toggleBtn = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const icon = toggleBtn.querySelector('i');
+    
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark');
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    }
+    
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      if (body.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        localStorage.setItem('theme', 'light');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    });
+    
+    // Cursor Glow
+    const cursor = document.getElementById('cursorGlow');
+    if (cursor) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+      document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
+    }
+
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.reveal');
+    function checkReveal() {
+      const windowHeight = window.innerHeight;
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < windowHeight - 100) el.classList.add('active');
+      });
+    }
+    window.addEventListener('scroll', checkReveal);
+    window.addEventListener('resize', checkReveal);
+    checkReveal();
+
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        navbar.style.background = body.classList.contains('dark') ? 'rgba(10, 30, 40, 0.9)' : 'rgba(255, 255, 255, 0.85)';
+      } else {
+        navbar.style.background = body.classList.contains('dark') ? 'rgba(10, 30, 40, 0.85)' : 'rgba(255, 255, 255, 0.75)';
+      }
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('.nav-links a, .btn-primary, .btn-outline').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const hash = this.getAttribute('href');
+        if (hash && hash.startsWith('#')) {
+          e.preventDefault();
+          const targetId = hash.substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            const offsetTop = targetElement.offsetTop - 70;
+            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            history.pushState(null, null, hash);
+          }
+        }
+      });
+    });
+
+    // Tilt effect for cards
+    const tiltItems = document.querySelectorAll('.project-card, .info-panel, .card-float, .team-card');
+    tiltItems.forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 28;
+        const rotateY = (centerX - x) / 28;
+        el.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      });
+    });
+
+    // Dynamic badge
+    const badgeSpan = document.querySelector('.hero-badge');
+    const badgeTexts = [
+      '<i class="fas fa-building"></i> Business Collective • Established 2024',
+      '<i class="fas fa-handshake"></i> Kolaborasi & Inovasi',
+      '<i class="fas fa-rocket"></i> Solusi Digital untuk Bisnis',
+      '<i class="fas fa-chart-line"></i> Growth Together'
+    ];
+    let badgeIdx = 0;
+    if (badgeSpan) {
+      setInterval(() => {
+        badgeIdx = (badgeIdx + 1) % badgeTexts.length;
+        badgeSpan.innerHTML = badgeTexts[badgeIdx];
+      }, 4200);
+    }
+
+    // Social toast
+    const allSocials = document.querySelectorAll('.social-icon-sm, .social-links-compact a');
+    allSocials.forEach(icon => {
+      icon.addEventListener('click', (e) => {
+        e.preventDefault();
+        const platform = icon.querySelector('i')?.classList[1] || 'platform';
+        const toast = document.createElement('div');
+        toast.innerText = `✨ Terhubung via ${platform} — Tim Arkayaniz siap berkolaborasi ✨`;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '25px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.backgroundColor = '#1e88e5';
+        toast.style.color = 'white';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '60px';
+        toast.style.fontSize = '0.9rem';
+        toast.style.zIndex = '1100';
+        toast.style.backdropFilter = 'blur(12px)';
+        toast.style.fontWeight = '500';
+        toast.style.whiteSpace = 'nowrap';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
