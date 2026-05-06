@@ -23,6 +23,7 @@ Yang penting jalan dulu, nanti disempurnakan sambil jalan 🚀
 - 🐿️ Muhammad Arfa
 - 🐠 Narayan
 - 🐒 Azka
+- 👶 Faiz
 
 ---
 
