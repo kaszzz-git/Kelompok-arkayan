@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  🚀 Sekumpulan orang dengan ide liar, kopi dingin, dan deadline yang kadang ngejar balik.
+  🚀 Sekumpulan orang dengan ide gila, gajelas kaya orang orang nganggur++++++++++++
 </p>
 
 ---
